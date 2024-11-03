@@ -61,7 +61,7 @@ lib/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/space_gpt.git
+git clone https://github.com/WWI2196/Space-GPT.git
 cd space_gpt
 ```
 
@@ -121,9 +121,3 @@ Add custom avatars in:
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Flutter development team
-- Google's Gemini Pro API
-- Space Mono font family
