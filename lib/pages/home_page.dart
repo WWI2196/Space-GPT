@@ -503,7 +503,7 @@ class _HomePageState extends State<HomePage> {
                                     mini: true,
                                     backgroundColor: Colors.pink.shade900.withOpacity(0.7),
                                     onPressed: _scrollToBottom,
-                                    child: Icon(Icons.arrow_downward, color: Colors.white),
+                                    child: const Icon(Icons.arrow_downward, color: Colors.white),
                                   ),
                                 ),
                               ),
