@@ -17,11 +17,13 @@ A sophisticated Flutter-based chat application featuring a space-themed UI that 
 
 ## 🛠 Tech Stack
 
-- Flutter/Dart
-- BLoC Pattern for state management
+- Flutter/Dart (SDK ^3.5.3)
+- BLoC Pattern for state management (bloc, flutter_bloc)
 - Dio for HTTP requests
+- Lottie for animations (^3.1.3)
 - Google's Gemini Pro API
 - Custom image caching system
+- Cupertino Icons (^1.0.8)
 
 ## 📁 Project Structure
 
