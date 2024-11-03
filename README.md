@@ -121,9 +121,3 @@ Add custom avatars in:
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Flutter development team
-- Google's Gemini Pro API
-- Space Mono font family
