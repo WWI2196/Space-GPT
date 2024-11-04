@@ -64,13 +64,7 @@ class _HomePageState extends State<HomePage> {
   bool _showScrollButton = false;
   String _userProfileImage = "assets/user_avatar.jpg";
   String _modelProfileImage = "assets/bot_avatar.jpg";
-  bool _isSearching = false;
-  String _searchQuery = '';
   final List<ChatMessageModel> _filteredMessages = [];
-  final ImageCacheManager _imageCacheManager = ImageCacheManager();
-  final List<MessageGroup> _messageGroups = [];
-  Timer? _typingTimer;
-  bool _isTyping = false;
   bool _precacheInitialized = false;
   bool _isLoading = false;
 
@@ -158,20 +152,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Update _clearChat to properly handle scroll button
-  void _clearChat() {
-    setState(() {
-      chatBloc.messages.clear();
-      chatBloc.emit(ChatSuccessState(messages: const []));
-      _showScrollButton = false;
-    });
-    
-    // Ensure scroll position is reset
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(0);
-      }
-    });
-  }
 
   @override
   void dispose() {
@@ -239,14 +219,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       // Clear messages
       chatBloc.messages.clear();
+      // ignore: invalid_use_of_visible_for_testing_member
       chatBloc.emit(ChatSuccessState(messages: const []));
       
       // Clear text input
       textEditingController.clear();
       
       // Reset search state if implemented
-      _isSearching = false;
-      _searchQuery = '';
       _filteredMessages.clear();
       
       // Reset scroll button state
@@ -261,51 +240,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Add methods
-  void _updateMessageGroups(List<ChatMessageModel> messages) {
-    _messageGroups.clear();
-    
-    if (messages.isEmpty) return;
-
-    DateTime currentDate = DateTime(
-      messages[0].timestamp.year,
-      messages[0].timestamp.month,
-      messages[0].timestamp.day,
-    );
-    
-    List<ChatMessageModel> currentGroup = [];
-
-    for (var message in messages) {
-      final messageDate = DateTime(
-        message.timestamp.year,
-        message.timestamp.month,
-        message.timestamp.day,
-      );
-
-      if (messageDate == currentDate) {
-        currentGroup.add(message);
-      } else {
-        _messageGroups.add(MessageGroup(currentDate, List.from(currentGroup)));
-        currentDate = messageDate;
-        currentGroup = [message];
-      }
-    }
-
-    if (currentGroup.isNotEmpty) {
-      _messageGroups.add(MessageGroup(currentDate, currentGroup));
-    }
-  }
-
-  // Add typing indicator
-  void _handleTyping() {
-    if (_typingTimer?.isActive ?? false) _typingTimer!.cancel();
-    
-    setState(() => _isTyping = true);
-    
-    _typingTimer = Timer(const Duration(milliseconds: 500), () {
-      if (mounted) setState(() => _isTyping = false);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -551,25 +485,6 @@ class _HomePageState extends State<HomePage> {
               return const SizedBox();
           }
         },
-      ),
-    );
-  }
-
-  // Update _buildLoadingIndicator to only show animation
-  Widget _buildLoadingIndicator() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.purple.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: const SizedBox(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
       ),
     );
   }
